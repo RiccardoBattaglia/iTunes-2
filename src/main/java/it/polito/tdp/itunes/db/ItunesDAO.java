@@ -139,4 +139,26 @@ public class ItunesDAO {
 		}
 		return result;
 	}
+	
+	public List<String> getAllNameAlbums(){
+		final String sql = "select distinct title "
+				+ "from album "
+				+ "order by title";
+		List<String> result = new LinkedList<>();
+		
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+
+			while (res.next()) {
+				result.add(res.getString("Title"));
+			}
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("SQL Error");
+		}
+		return result;
+	}
 }
