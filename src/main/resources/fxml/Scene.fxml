@@ -61,7 +61,7 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Distanza (d)">
+                  <Label text="Durata (d)">
                      <padding>
                         <Insets right="10.0" />
                      </padding>
