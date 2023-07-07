@@ -6,6 +6,8 @@ package it.polito.tdp.itunes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
+
 import it.polito.tdp.itunes.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,11 +50,57 @@ public class FXMLController {
     @FXML
     void doComponente(ActionEvent event) {
     	
+    	String title="";
+    	title=cmbA1.getValue();
+    	
+    	if(title==null) {
+    		txtResult.appendText("Inserire un album.\n");
+    		return;
+    	}
+    	
+    	int aid = this.model.getIdVerticeDaTitle(title);
+    	
+    	Set<Integer> connessa = model.getComponente(aid) ;
+    	
+    	txtResult.appendText("Componente connessa - "+ title +"\n");
+    	txtResult.appendText("Dimensione componente: "+ connessa.size()+"\n");
+    	txtResult.appendText("Durata componente: "+ this.model.getDurataComponente(connessa) +"\n");
+    	
     }
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
     	
+    	String s = txtDurata.getText() ;
+    	
+    	if(s.equals("")) {
+    		txtResult.setText("Inserire una durata.\n");
+    		return ;
+    	}
+    	
+    	double durata = 0.0 ;
+
+    	try {
+	    	durata = Double.parseDouble(s) ;
+    	} catch(NumberFormatException e) {
+    		txtResult.setText("Inserire un numero.\n");
+    		return ;
+    	}
+    	
+    	int d=0;
+    	d=(int)(durata*60000);
+    	
+    	
+    	
+    	this.model.creaGrafo(d);
+    	d=0;
+    	
+//    	stampa grafo
+    	this.txtResult.setText("Grafo creato.\n");
+    	this.txtResult.appendText("Ci sono " + this.model.nVertici() + " vertici\n");
+    	this.txtResult.appendText("Ci sono " + this.model.nArchi() + " archi\n\n");
+    	
+    	cmbA1.getItems().setAll(this.model.titleVertici());
     }
 
     @FXML
@@ -75,7 +123,7 @@ public class FXMLController {
     public void setModel(Model model) {
     	this.model = model;
     	
-    	cmbA1.getItems().addAll(this.model.getAllNameAlbums());
+//    	cmbA1.getItems().addAll(this.model.getAllNameAlbums());
     }
 
 }
