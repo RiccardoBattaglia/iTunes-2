@@ -86,6 +86,7 @@ public class FXMLController {
     		txtResult.setText("Inserire un numero.\n");
     		return ;
     	}
+    
     	
     	int d=0;
     	d=(int)(durata*60000);
